@@ -1,0 +1,105 @@
+name: evpn-ipvpn-srl
+
+mgmt:
+  network: srl-dcf-srl-mgmt
+  ipv4-subnet: 172.20.41.0/24
+  ipv6-subnet: 2001:172:20:41::/64
+
+prefix: ""
+topology:
+  defaults:
+    kind: nokia_srlinux
+  kinds:
+    nokia_srlinux:
+      image: ghcr.io/nokia/srlinux:25.7.1
+    linux:
+      image: ghcr.io/srl-labs/network-multitool
+  nodes:
+    leaf1-dc1:
+      startup-config: configs/leaf1-dc1-config.json
+      mgmt-ipv4: 172.20.41.2
+      mgmt-ipv6: 2001:172:20:41::2
+    leaf2-dc1:
+      startup-config: configs/leaf2-dc1-config.json
+      mgmt-ipv4: 172.20.41.3
+      mgmt-ipv6: 2001:172:20:41::3
+    spine1-dc1:
+      startup-config: configs/spine1-dc1-config.json
+      mgmt-ipv4: 172.20.41.4
+      mgmt-ipv6: 2001:172:20:41::4
+    spine2-dc1:
+      startup-config: configs/spine2-dc1-config.json
+      mgmt-ipv4: 172.20.41.5
+      mgmt-ipv6: 2001:172:20:41::5
+    dcgw-dc1:
+      startup-config: configs/dcgw-dc1-config.json
+      type: ixr-x1b
+      license: license-srlinux257.txt
+      mgmt-ipv4: 172.20.41.6
+      mgmt-ipv6: 2001:172:20:41::6
+    client1-dc1:
+      kind: linux
+      mgmt-ipv4: 172.20.41.13
+      mgmt-ipv6: 2001:172:20:41::13
+      exec:
+        - ip address add 172.16.10.50/24 dev eth1
+    client2-dc1:
+      kind: linux
+      mgmt-ipv4: 172.20.41.14
+      mgmt-ipv6: 2001:172:20:41::14
+      exec:
+        - ip address add 10.80.1.10/24 dev eth1
+        - ip route add 10.90.1.0/24 via 10.80.1.1
+    leaf1-dc2:
+      startup-config: configs/leaf1-dc2-config.json
+      mgmt-ipv4: 172.20.41.21
+      mgmt-ipv6: 2001:172:20:41::21
+    leaf2-dc2:
+      startup-config: configs/leaf2-dc2-config.json
+      mgmt-ipv4: 172.20.41.22
+      mgmt-ipv6: 2001:172:20:41::22
+    spine1-dc2:
+      startup-config: configs/spine1-dc2-config.json
+      mgmt-ipv4: 172.20.41.23
+      mgmt-ipv6: 2001:172:20:41::23
+    spine2-dc2:
+      startup-config: configs/spine2-dc2-config.json
+      mgmt-ipv4: 172.20.41.24
+      mgmt-ipv6: 2001:172:20:41::24
+    dcgw-dc2:
+      startup-config: configs/dcgw-dc2-config.json
+      type: ixr-x1b
+      license: license-srlinux257.txt
+      mgmt-ipv4: 172.20.41.25
+      mgmt-ipv6: 2001:172:20:41::25
+    client1-dc2:
+      kind: linux
+      mgmt-ipv4: 172.20.41.33
+      mgmt-ipv6: 2001:172:20:41::33
+      exec:
+        - ip address add 172.16.10.60/24 dev eth1
+    client2-dc2:
+      kind: linux
+      mgmt-ipv4: 172.20.41.34
+      mgmt-ipv6: 2001:172:20:41::34
+      exec:
+        - ip address add 10.90.1.10/24 dev eth1
+        - ip route add 10.80.1.0/24 via 10.90.1.1
+  links:
+    - endpoints: ["leaf1-dc1:e1-1","spine1-dc1:e1-1"]
+    - endpoints: ["leaf2-dc1:e1-1","spine2-dc1:e1-1"]
+    - endpoints: ["leaf1-dc1:e1-2","spine2-dc1:e1-2"]
+    - endpoints: ["leaf2-dc1:e1-2","spine1-dc1:e1-2"]
+    - endpoints: ["dcgw-dc1:e1-5","spine1-dc1:e1-5"]
+    - endpoints: ["dcgw-dc1:e1-6","spine2-dc1:e1-6"]
+    - endpoints: ["leaf1-dc1:e1-10","client1-dc1:eth1"]
+    - endpoints: ["leaf2-dc1:e1-10","client2-dc1:eth1"]
+    - endpoints: ["leaf1-dc2:e1-1","spine1-dc2:e1-1"]
+    - endpoints: ["leaf2-dc2:e1-1","spine2-dc2:e1-1"]
+    - endpoints: ["leaf1-dc2:e1-2","spine2-dc2:e1-2"]
+    - endpoints: ["leaf2-dc2:e1-2","spine1-dc2:e1-2"]
+    - endpoints: ["dcgw-dc2:e1-5","spine1-dc2:e1-5"]
+    - endpoints: ["dcgw-dc2:e1-6","spine2-dc2:e1-6"]
+    - endpoints: ["leaf1-dc2:e1-10","client1-dc2:eth1"]
+    - endpoints: ["leaf2-dc2:e1-10","client2-dc2:eth1"]
+    - endpoints: ["dcgw-dc1:e1-1","dcgw-dc2:e1-1"]
