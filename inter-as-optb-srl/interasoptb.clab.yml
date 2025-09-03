@@ -1,0 +1,106 @@
+name: interasoptb
+
+topology:
+  defaults:
+    kind: nokia_srlinux
+  kinds:
+    nokia_srlinux:
+      image: ghcr.io/nokia/srlinux:25.7.1
+      license: license.txt
+      type: sxr-1x-44s
+    linux:
+      image: ghcr.io/srl-labs/network-multitool
+
+  nodes:
+    pe1:
+      startup-config: ./configs/pe1.cfg
+    pe2:
+      startup-config: ./configs/pe2.cfg
+    pe3:
+      startup-config: ./configs/pe3.cfg
+    br4:
+      startup-config: ./configs/br4.cfg
+    br5:
+      startup-config: ./configs/br5.cfg
+    br6:
+      startup-config: ./configs/br6.cfg
+    client11:
+      kind: linux
+      exec:
+        - ip link add link eth1 name eth1.1 type vlan id 1
+        - ip link set eth1.1 up
+        - ip addr add 10.10.10.11/24 dev eth1.1
+      image: ghcr.io/srl-labs/network-multitool
+    client231:
+      kind: linux
+      binds:
+        - ./configs/eth1.sh:/tmp/eth1.sh
+      exec:
+        - bash /tmp/eth1.sh
+        - ip addr add 10.10.10.231/24 dev bond0.1
+      image: ghcr.io/srl-labs/network-multitool
+    client12:
+      kind: linux
+      exec:
+        - ip link add link eth1 name eth1.1 type vlan id 1
+        - ip link set eth1.1 up
+        - ip addr add 10.10.10.12/24 dev eth1.1
+      image: ghcr.io/srl-labs/network-multitool
+    client232:
+      kind: linux
+      binds:
+        - ./configs/eth1.sh:/tmp/eth1.sh
+      exec:
+        - bash /tmp/eth1.sh
+        - ip addr add 10.10.10.232/24 dev bond0.1
+      image: ghcr.io/srl-labs/network-multitool
+    client13:
+      kind: linux
+      exec:
+        - ip link add link eth1 name eth1.1 type vlan id 1
+        - ip link set eth1.1 up
+        - ip addr add 10.10.10.13/24 dev eth1.1
+        - ip route del default
+        - ip route add default via 10.10.10.254 dev eth1.1
+      image: ghcr.io/srl-labs/network-multitool
+    client21:
+      kind: linux
+      exec:
+        - ip link add link eth1 name eth1.1 type vlan id 1
+        - ip link set eth1.1 up
+        - ip addr add 20.20.20.21/24 dev eth1.1
+        - ip route del default
+        - ip route add default via 20.20.20.254 dev eth1.1
+      image: ghcr.io/srl-labs/network-multitool
+    client31:
+      kind: linux
+      exec:
+        - ip link add link eth1 name eth1.1 type vlan id 1
+        - ip link set eth1.1 up
+        - ip addr add 30.30.30.31/24 dev eth1.1
+        - ip route del default
+        - ip route add default via 30.30.30.254 dev eth1.1
+      image: ghcr.io/srl-labs/network-multitool
+
+  links:
+    - endpoints: [ pe1:e1-1, client11:eth1 ]
+    - endpoints: [ pe1:e1-2, client12:eth1 ]
+    - endpoints: [ pe1:e1-3, client13:eth1 ]
+    - endpoints: [ pe1:e1-10, br4:e1-10 ]
+
+    - endpoints: [ br4:e1-11, br5:e1-10 ]
+    - endpoints: [ br4:e1-12, br6:e1-10 ]
+
+    - endpoints: [ br5:e1-11, pe2:e1-10 ]
+    - endpoints: [ br5:e1-12, br6:e1-12 ]
+
+    - endpoints: [ br6:e1-11, pe3:e1-10 ]
+
+    - endpoints: [ pe2:e1-1, client21:eth1 ]
+    - endpoints: [ pe2:e1-2, client232:eth1 ]
+    - endpoints: [ pe2:e1-3, client231:eth1 ]
+    - endpoints: [ pe2:e1-11, pe3:e1-11 ]
+
+    - endpoints: [ pe3:e1-1, client231:eth2 ]
+    - endpoints: [ pe3:e1-2, client232:eth2 ]
+    - endpoints: [ pe3:e1-3, client31:eth1 ]
