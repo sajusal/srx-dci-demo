@@ -16,23 +16,23 @@ topology:
       image: ghcr.io/srl-labs/network-multitool
   nodes:
     leaf1-dc1:
-      #startup-config: configs/dcf1/l1dc1-startup.cfg
+      startup-config: configs/leaf1-dc1-config.json
       mgmt-ipv4: 172.20.41.2
       mgmt-ipv6: 2001:172:20:41::2
     leaf2-dc1:
-      #startup-config: configs/dcf1/l2dc1-startup.cfg
+      startup-config: configs/leaf2-dc1-config.json
       mgmt-ipv4: 172.20.41.3
       mgmt-ipv6: 2001:172:20:41::3
     spine1-dc1:
-      #startup-config: configs/dcf1/s1dc1-startup.cfg
+      startup-config: configs/spine1-dc1-config.json
       mgmt-ipv4: 172.20.41.4
       mgmt-ipv6: 2001:172:20:41::4
     spine2-dc1:
-      #startup-config: configs/dcf1/s2dc1-startup.cfg
+      startup-config: configs/spine2-dc1-config.json
       mgmt-ipv4: 172.20.41.5
       mgmt-ipv6: 2001:172:20:41::5
     dcgw-dc1:
-      #startup-config: configs/dcf1/dcgwdc1-startup.cfg
+      startup-config: configs/dcf1/dcgw-dc1-config.json
       type: ixr-x1b
       license: license-srlinux257.txt
       mgmt-ipv4: 172.20.41.6
@@ -52,23 +52,23 @@ topology:
         - ip address add 10.80.1.10/24 dev eth1
         - ip route add 10.90.1.0/24 via 10.80.1.1
     leaf1-dc2:
-      #startup-config: configs/dcf1/l1dc2-startup.cfg
+      startup-config: configs/leaf1-dc2-config.json
       mgmt-ipv4: 172.20.41.21
       mgmt-ipv6: 2001:172:20:41::21
     leaf2-dc2:
-      #startup-config: configs/dcf1/l2dc2-startup.cfg
+      startup-config: configs/leaf2-dc2-config.json
       mgmt-ipv4: 172.20.41.22
       mgmt-ipv6: 2001:172:20:41::22
     spine1-dc2:
-      #startup-config: configs/dcf1/s1dc2-startup.cfg
+      startup-config: configs/spine1-dc2-config.json
       mgmt-ipv4: 172.20.41.23
       mgmt-ipv6: 2001:172:20:41::23
     spine2-dc2:
-      #startup-config: configs/dcf1/s2dc2-startup.cfg
+      startup-config: configs/spine2-dc2-config.json
       mgmt-ipv4: 172.20.41.24
       mgmt-ipv6: 2001:172:20:41::24
     dcgw-dc2:
-      #startup-config: configs/dcf1/dcgwdc2-startup.cfg
+      startup-config: configs/dcgw-dc2-config.json
       type: ixr-x1b
       license: license-srlinux257.txt
       mgmt-ipv4: 172.20.41.25
