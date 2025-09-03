@@ -1,5 +1,6 @@
 name: interasoptb
 
+prefix: ""
 topology:
   defaults:
     kind: nokia_srlinux
@@ -13,17 +14,17 @@ topology:
 
   nodes:
     pe1:
-      startup-config: ./configs/pe1.cfg
+      startup-config: configs/pe1-config.json
     pe2:
-      startup-config: ./configs/pe2.cfg
+      startup-config: configs/pe2-config.json
     pe3:
-      startup-config: ./configs/pe3.cfg
+      startup-config: configs/pe3-config.json
     br4:
-      startup-config: ./configs/br4.cfg
+      startup-config: configs/br4-config.json
     br5:
-      startup-config: ./configs/br5.cfg
+      startup-config: configs/br5-config.json
     br6:
-      startup-config: ./configs/br6.cfg
+      startup-config: configs/br6-config.json
     client11:
       kind: linux
       exec:
