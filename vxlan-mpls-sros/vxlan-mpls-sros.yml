@@ -17,29 +17,29 @@ topology:
       image: ghcr.io/srl-labs/network-multitool
   nodes:
     pe1:
-      #startup-config: configs/dcf1/l1dc1-startup.cfg
+      startup-config: configs/pe1-config.json
       kind: nokia_srlinux
       image: ghcr.io/nokia/srlinux:25.7.1
       mgmt-ipv4: 172.20.41.2
       mgmt-ipv6: 2001:172:20:41::2
     pe2:
-      #startup-config: configs/dcf1/l2dc1-startup.cfg
+      startup-config: configs/pe2-config.cfg
       mgmt-ipv4: 172.20.41.3
       mgmt-ipv6: 2001:172:20:41::3
     pe3:
-      #startup-config: configs/dcf1/s1dc1-startup.cfg
+      startup-config: configs/pe3-config.cfg
       mgmt-ipv4: 172.20.41.4
       mgmt-ipv6: 2001:172:20:41::4
     pe4:
-      #startup-config: configs/dcf1/s2dc1-startup.cfg
+      startup-config: configs/pe4-config.cfg
       mgmt-ipv4: 172.20.41.5
       mgmt-ipv6: 2001:172:20:41::5
     pe5:
-      #startup-config: configs/dcf1/dcgwdc1-startup.cfg
+      startup-config: configs/pe5-config.cfg
       mgmt-ipv4: 172.20.41.6
       mgmt-ipv6: 2001:172:20:41::6
     pe6:
-      #startup-config: configs/dcf1/dcgwdc1-startup.cfg
+      startup-config: configs/pe6-config.json
       kind: nokia_srlinux
       image: ghcr.io/nokia/srlinux:25.7.1
       mgmt-ipv4: 172.20.41.7
