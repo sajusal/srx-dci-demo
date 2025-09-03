@@ -32,7 +32,7 @@ topology:
       mgmt-ipv4: 172.20.41.5
       mgmt-ipv6: 2001:172:20:41::5
     dcgw-dc1:
-      startup-config: configs/dcf1/dcgw-dc1-config.json
+      startup-config: configs/dcgw-dc1-config.json
       type: ixr-x1b
       license: license-srlinux257.txt
       mgmt-ipv4: 172.20.41.6
