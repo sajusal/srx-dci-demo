@@ -1,0 +1,71 @@
+name: vxlan-mpls-ies
+
+mgmt:
+  network: srl-dcf-srl-mgmt
+  ipv4-subnet: 172.20.41.0/24
+  ipv6-subnet: 2001:172:20:41::/64
+
+prefix: ""
+topology:
+  defaults:
+    kind: nokia_srsim
+  kinds:
+    nokia_srsim:
+      image: localhost/nokia/srsim:25.7.R1
+      license: srsim-license-257.txt
+    linux:
+      image: ghcr.io/srl-labs/network-multitool
+  nodes:
+    pe1:
+      #startup-config: configs/dcf1/l1dc1-startup.cfg
+      kind: nokia_srlinux
+      image: ghcr.io/nokia/srlinux:25.7.1
+      mgmt-ipv4: 172.20.41.2
+      mgmt-ipv6: 2001:172:20:41::2
+    pe2:
+      #startup-config: configs/dcf1/l2dc1-startup.cfg
+      mgmt-ipv4: 172.20.41.3
+      mgmt-ipv6: 2001:172:20:41::3
+    pe3:
+      #startup-config: configs/dcf1/s1dc1-startup.cfg
+      mgmt-ipv4: 172.20.41.4
+      mgmt-ipv6: 2001:172:20:41::4
+    pe4:
+      #startup-config: configs/dcf1/s2dc1-startup.cfg
+      mgmt-ipv4: 172.20.41.5
+      mgmt-ipv6: 2001:172:20:41::5
+    pe5:
+      #startup-config: configs/dcf1/dcgwdc1-startup.cfg
+      mgmt-ipv4: 172.20.41.6
+      mgmt-ipv6: 2001:172:20:41::6
+    pe6:
+      #startup-config: configs/dcf1/dcgwdc1-startup.cfg
+      kind: nokia_srlinux
+      image: ghcr.io/nokia/srlinux:25.7.1
+      mgmt-ipv4: 172.20.41.7
+      mgmt-ipv6: 2001:172:20:41::7
+    client1:
+      kind: linux
+      mgmt-ipv4: 172.20.41.13
+      mgmt-ipv6: 2001:172:20:41::13
+      exec:
+        - ip address add 172.16.10.50/24 dev eth1
+      image: ghcr.io/srl-labs/network-multitool
+    client2:
+      kind: linux
+      mgmt-ipv4: 172.20.41.14
+      mgmt-ipv6: 2001:172:20:41::14
+      exec:
+        - ip address add 172.16.10.60/24 dev eth1
+      image: ghcr.io/srl-labs/network-multitool
+  links:
+    - endpoints: [ pe1:e1-1, pe2:1/1/c1/1 ]
+    - endpoints: [ pe1:e1-2, pe3:1/1/c2/1 ]
+    - endpoints: [ pe2:1/1/c3/1, pe3:1/1/c3/1 ]
+    - endpoints: [ pe2:1/1/c4/1, pe4:1/1/c4/1 ]
+    - endpoints: [ pe3:1/1/c5/1, pe5:1/1/c5/1 ]
+    - endpoints: [ pe4:1/1/c6/1, pe5:1/1/c6/1 ]
+    - endpoints: [ pe6:e1-1, pe4:1/1/c1/1 ]
+    - endpoints: [ pe6:e1-2, pe5:1/1/c2/1 ]
+    - endpoints: [ pe1:e1-6, client1:eth1 ]
+    - endpoints: [ pe6:e1-6, client2:eth1 ]
