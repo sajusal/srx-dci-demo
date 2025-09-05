@@ -7,7 +7,7 @@ topology:
   kinds:
     nokia_srlinux:
       image: ghcr.io/nokia/srlinux:25.7.1
-      license: license.txt
+      license: ../srl-license.txt
       type: sxr-1x-44s
     linux:
       image: ghcr.io/srl-labs/network-multitool
