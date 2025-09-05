@@ -34,7 +34,7 @@ topology:
     dcgw-dc1:
       startup-config: configs/dcgw-dc1-config.json
       type: ixr-x1b
-      license: license-srlinux257.txt
+      license: ../srl-license.txt
       mgmt-ipv4: 172.20.41.6
       mgmt-ipv6: 2001:172:20:41::6
     client1-dc1:
@@ -70,7 +70,7 @@ topology:
     dcgw-dc2:
       startup-config: configs/dcgw-dc2-config.json
       type: ixr-x1b
-      license: license-srlinux257.txt
+      license: ../srl-license.txt
       mgmt-ipv4: 172.20.41.25
       mgmt-ipv6: 2001:172:20:41::25
     client1-dc2:
