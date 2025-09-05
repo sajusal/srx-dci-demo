@@ -12,7 +12,7 @@ topology:
   kinds:
     nokia_srsim:
       image: localhost/nokia/srsim:25.7.R1
-      license: srsim-license-257.txt
+      license: ../srsim-license.txt
     linux:
       image: ghcr.io/srl-labs/network-multitool
   nodes:
